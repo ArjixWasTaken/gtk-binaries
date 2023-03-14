@@ -11,12 +11,12 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: windows-2022
     strategy:
       matrix:
         python: ["3.11"]
         platform: [x64, win32]
-        vstudio: [16]
+        vstudio: [17]
         include:
           - platform: x64
             arch: x64
@@ -52,7 +52,6 @@ jobs:
           gvsbuild build
           --platform=${{ matrix.arch }}
           --vs-ver=${{ matrix.vstudio }}
-          --patches-root-dir=${{ github.workspace }}\patches
           gtk4
 
       - name: Restore git binary
