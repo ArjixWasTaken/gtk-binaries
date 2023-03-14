@@ -14,7 +14,7 @@ jobs:
     runs-on: windows-2019
     strategy:
       matrix:
-        python: ["3.9", "3.10"]
+        python: ["3.11"]
         platform: [x64, win32]
         vstudio: [16]
         include:
@@ -52,12 +52,8 @@ jobs:
           gvsbuild build
           --platform=${{ matrix.arch }}
           --vs-ver=${{ matrix.vstudio }}
-          --same-python
-          --enable-gi
-          --py-wheel
-          --skip gtksourceview4,emeus,clutter
           --patches-root-dir=${{ github.workspace }}\patches
-          gtk3-full pycairo pygobject lz4 enchant
+          gtk4
 
       - name: Restore git binary
         run: Rename-Item  "C:\Program Files\Git\usr\notbin" bin
@@ -68,7 +64,7 @@ jobs:
           ${{ github.workspace }}/${{ env.release_name }}.zip
           "C:\gtk-build\gtk\${{matrix.platform}}\release"
         env:
-          release_name: "gvsbuild-py${{ matrix.python }}-vs${{ matrix.vstudio }}-${{ matrix.arch }}"
+          release_name: "gvsbuild-vs${{ matrix.vstudio }}-${{ matrix.arch }}"
 
       - name: Current Date
         id: date
